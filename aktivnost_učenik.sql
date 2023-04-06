@@ -1,5 +1,5 @@
 --kreiranje baze
-create database SlobodneAktivnosti;
+create database SlobodneAktivnosti default charset utf8;
 use SlobodneAktivnosti;
 --kreiranje tablice
 create table Aktivnost
@@ -20,10 +20,10 @@ values ('informatika'), ('robotika'), ('novinarstvo'), ('rukomet'), ('nogomet');
 
 insert into Ucenik
 values 
-('Iva', 'Aniæ', 1),
+('Iva', 'AniÄ‡', 1),
 ('Hrvoje', 'Horvat', 2),
-('Marko', 'Iviæ', 3),
-('Maja', 'Majiæ', 3),
+('Marko', 'IviÄ‡', 3),
+('Maja', 'MajiÄ‡', 3),
 ('Maja', 'Horvat', 6);
 
 select * from Aktivnost;

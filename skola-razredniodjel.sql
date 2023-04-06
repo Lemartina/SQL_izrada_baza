@@ -5,7 +5,7 @@ select * from RazredniOdjel;
 
 select Ime, Prezime,ImeRazrednika, PrezimeRazrednika from Ucenik inner join RazredniOdjel
 on Ucenik.RazredID= RazredniOdjel.IDRazred
-where (Ime='Marko') and (Prezime='Markiæ');
+where (Ime='Marko') and (Prezime='MarkiÄ‡');
 
 select Ime,Prezime, NazivRazreda from Ucenik inner join RazredniOdjel
 on Ucenik.RazredID = RazredniOdjel.IDRazred
@@ -22,7 +22,7 @@ where oib=23456789101;
 
 delete from ucenik where oib=34567891011;
 
-insert into ucenik values ('Marko', 'Markiæ', 34567891011, 'Splitska ulica 1', 3, 3.78, 'mmarkic@gmail.com', 'Zagreb');
+insert into ucenik values ('Marko', 'MarkiÄ‡', 34567891011, 'Splitska ulica 1', 3, 3.78, 'mmarkic@gmail.com', 'Zagreb');
 
 
 

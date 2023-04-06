@@ -1,38 +1,38 @@
---constraint Uèenik_CHK CHECK(IDŠifra between 1 and 1000);
+--constraint UÄenik_CHK CHECK(IDSifra between 1 and 1000);
 
-select * from Uèenik;
+select * from Ucenik;
 
-create table Uèenik
-(IDŠifra int not null identity (1,1),
+create table Ucenik
+(IDSifra int not null identity (1,1),
 Ime nvarchar(30) not null,
 Prezime nvarchar (30) not null,
-Mjesto_roğenja nvarchar (30) not null,
-constraint Uèenik_Pk primary key (IDŠifra),
-constraint Uèenik_CHK check(IDŠifra between 1 and 1000));
+Mjesto_rodenja nvarchar (30) not null,
+constraint Ucenik_Pk primary key (IDSifra),
+constraint Ucenik_CHK check(IDSifra between 1 and 1000));
 
 CREATE TABLE Aktivnost
-(IDŠifra_aktivnosti int not null identity (1,1),
+(IDSifra_aktivnosti int not null identity (1,1),
 Naziv nvarchar(30) not null,
-constraint Aktivnost_PK primary key (IDŠifra_aktivnosti));
+constraint Aktivnost_PK primary key (IDSifra_aktivnosti));
 
 create table Evidencija
-(IDŠifEV int not null identity(1,1),
-ŠifraID int not null,
-Šifra_aktivnostiID int not null,
-constraint Evidencija_PK primary key (IDŠifEv),
-constraint Evidencija_FK foreign key(ŠifraID) references Uèenik(IDŠifra));
+(IDSifEV int not null identity(1,1),
+sifraID int not null,
+sifra_aktivnostiID int not null,
+constraint Evidencija_PK primary key (IDSifEv),
+constraint Evidencija_FK foreign key(sifraID) references Ucenik(IDSifra));
 
 /*msg 2714, Level 16, State 5, Line 25
 There is already an object named 'Evidencija_FK' in the database.
 Msg 1750, Level 16, State 1, Line 25
 Could not create constraint or index. See previous errors.*/
 alter table Evidencija 
-add constraint Evidencija_FK foreign key(Šifra_aktivnostiID) references Aktivnost(IDŠifra_aktivnosti);
+add constraint Evidencija_FK foreign key(sifra_aktivnostiID) references Aktivnost(IDSifra_aktivnosti);
 
 select * from Evidencija;
 
-alter table Uèenik 
-add Datum_roğenja nvarchar (50);
+alter table Ucenik 
+add Datum_rodenja nvarchar (50);
 
 alter table Aktivnost 
 add Trajanje time;
@@ -42,24 +42,24 @@ alter table Aktivnost
 add Uvjet char(20),
 constraint Aktivnost_CHK check (Uvjet>10);
 
-alter table Uèenik alter column Prezime nvarchar(50);
-alter table Uèenik drop column Mjesto_roğenja;
+alter table Ucenik alter column Prezime nvarchar(50);
+alter table Ucenik drop column Mjesto_rodenja;
 
 
 -- bez id-a se unose podaci
-insert into Uèenik
-values ('Anita','Milièeviæ', ' Osijek', '2004-05-01'),('Sara', 'Tamak', 'Zagreb','2005-01-12'),
-('Marko', 'Gordiæ', 'Split', '2006-08-07'),
+insert into Ucenik
+values ('Anita','MiliÄeviÄ‡', ' Osijek', '2004-05-01'),('Sara', 'Tamak', 'Zagreb','2005-01-12'),
+('Marko', 'GordiÄ‡', 'Split', '2006-08-07'),
 ('Iva', 'Matan', 'Slatina','2005-09-03'),
-('Martina', 'Antunoviæ', 'Sisak','2000-07-28'),
+('Martina', 'AntunoviÄ‡', 'Sisak','2000-07-28'),
 ('Ivo', 'Lizak','Dubrovnik','2004-12-16');
 
 alter table Evidencija alter
-column Šifra_aktivnostiID varchar(3);
+column sifra_aktivnostiID varchar(3);
 
-alter table Aktivnost alter column IDŠifra_aktivnosti varchar(3) not null;
+alter table Aktivnost alter column IDSifra_aktivnosti varchar(3) not null;
 
-insert into Evidencija (ŠifraID,Šifra_aktivnostiID)
+insert into Evidencija (sifraID,sifra_aktivnostiID)
 values (1, 'A01'),
 (2, 'A02'),
 (3, 'T01'),
@@ -67,18 +67,18 @@ values (1, 'A01'),
 (5, 'R02'),
 (6, 'R03');
 
-drop table uèenik;
+drop table ucenik;
 
-alter table Uèenik 
-add Datum_roğenja date;
+alter table Ucenik 
+add Datum_rodenja date;
 
-select * from Uèenik;
+select * from Ucenik;
 
---uklanjanje ogranièenja
-alter table Uèenik drop constraint Uèenik_CHK;
+--uklanjanje ograniÄenja
+alter table Ucenik drop constraint Ucenik_CHK;
 
-alter table Aktivnost drop column ID_šifra;
-ALTER TABLE Aktivnost alter column Šifra char(3);
+alter table Aktivnost drop column ID_sifra;
+ALTER TABLE Aktivnost alter column sifra char(3);
 
 
 

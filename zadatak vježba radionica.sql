@@ -1,78 +1,78 @@
 --kreiranje baze
-create database Martina;
+create database Martina default charset utf8;
 use Martina;
 --kreiranje tablice
-create table Uèenik
-(IDŠifraUèenik int not null identity (1,1),
+create table Ucenik
+(IDsifraUcenik int not null identity (1,1),
 Ime nvarchar(30) not null,
 Prezime nvarchar (30) not null,
 Mjesto nvarchar (30) not null,
-constraint Uèenik_PK primary key (IDŠifraUèenik));
---dodavanje ogranièenja
-alter table Uèenik add constraint
-Uèenik_CHK check(IDŠifraUèenik between 1 and 1000);
+constraint Ucenik_PK primary key (IDsifraUcenik));
+--dodavanje ograniÄenja
+alter table Ucenik add constraint
+Ucenik_CHK check(IDsifraUcenik between 1 and 1000);
 
-select * from Uèenik;
+select * from Ucenik;
 
 create table Aktvivnost
-(IDŠifraAktivnosti smallint not null identity (1,1),
+(IDsifraAktivnosti smallint not null identity (1,1),
 Naziv nvarchar(30),
-constraint Aktvinost_PK primary key (IDŠifraAktivnosti));
+constraint Aktvinost_PK primary key (IDsifraAktivnosti));
 
 create table Evidencija
-(IDŠifraEvidencija int not null identity (1,1),
-IDŠifraUèenika int not null,
-IDŠifraAktivnost smallint not null,
-constraint Evidencija_PK primary key (IDŠifraEvidencija));
+(IDsifraEvidencija int not null identity (1,1),
+IDsifraUcenika int not null,
+IDsifraAktivnost smallint not null,
+constraint Evidencija_PK primary key (IDsifraEvidencija));
 
---strani kljuè
--- upozorenje ne mogu staviti strani kljuè
+--strani kljuÄ
+-- upozorenje ne mogu staviti strani kljuÄ
 alter table Evidencija
 add constraint FK_Evidencija_Aktivnost
-foreign key (IDŠifraAktivnosti)
-references Aktivnost(IDŠifraAktivnosti);
+foreign key (IDsifraAktivnosti)
+references Aktivnost(IDsifraAktivnosti);
 
 
 
 
 
-alter table Uèenik add MjestoRoðenja datetime2;
-alter table Uèenik drop constraint Uèenik_CHK;
+alter table Ucenik add MjestoRodenja datetime2;
+alter table Ucenik drop constraint Ucenik_CHK;
 
 alter table Aktvivnost add Trajanje smallint;
 alter table Aktvivnost add constraint Aktvivnost_CHK check(Trajanje between 2 and 10);
 alter table Aktvivnost add Uvjet smallint;
 alter table Aktvivnost add constraint Uvjet_CHK check (Uvjet >10);
-alter table Uèenik alter column Prezime nvarchar(50);
-alter table Uèenik drop column Mjesto;
+alter table Ucenik alter column Prezime nvarchar(50);
+alter table Ucenik drop column Mjesto;
 
 --popunjavnje tablica
 --brianje tablice
 drop table Evidencija;
 
 create table Evidencija(
-IDŠifraEvidencija int not null identity(1,1), 
-ŠifraAktivnostiID smallint not null,
-ŠifraUèenikaID int not null,
-constraint Evidencija_PK primary key(IDŠifraEvidencija));
+IDsifraEvidencija int not null identity(1,1), 
+SifraAktivnostiID smallint not null,
+SifraUcenikaID int not null,
+constraint Evidencija_PK primary key(IDsifraEvidencija));
 
 --foreign key ne mogu ga kreirati!!!!!
 alter table Evidencija
-constraint FK_Evidencija_Aktvivnost foreign key (ŠifraAktivnostiID)
-references Aktvivnost(IDŠifraAktivnosti),
-constraint FK_Evidencija_Uèenik foreign key (ŠifraUèenikID)
-references Uèenik(IDŠifraUèenik);
+constraint FK_Evidencija_Aktvivnost foreign key (SifraAktivnostiID)
+references Aktvivnost(IDsifraAktivnosti),
+constraint FK_Evidencija_Ucenik foreign key (SifraUcenikID)
+references Ucenik(IDdifraUcenik);
 
 --popunjavanje tablice
-select * from Uèenik;
-alter table Uèenik drop column MjestoRoðenja;
-alter table Uèenik add DatumRoðenja datetime2;
-insert into Uèenik
-values('Anita', 'Miliæeviæ','2004-05-01'),
+select * from Ucenik;
+alter table Ucenik drop column MjestoRodenja;
+alter table Ucenik add DatumRocenja datetime2;
+insert into Ucenik
+values('Anita', 'Miliï¿½eviï¿½','2004-05-01'),
 ('Sara','Tamak', '2005-01-12'),
-('Marko', 'Gordiæ', '2006-08-07'),
+('Marko', 'GordiÄ‡', '2006-08-07'),
 ('Iva', 'Matan', '2005-09-03'),
-('Martina', 'Antunoviæ', '2006-07-28'),
+('Martina', 'AntunoviÄ‡', '2006-07-28'),
 ('Ivo', 'Lizak', '2004-12-16');
 
 select  * from Aktvivnost;
@@ -94,14 +94,14 @@ values(1, 1),
 (6, 6);
 
 --izmjena podataka 
-update Uèenik set Ime='Josip' where IDŠifraUèenik =3; 
+update Ucenik set Ime='Josip' where IDcifraUcenik =3; 
 select * from Aktvivnost;
 update Aktvivnost set naziv='Uredsko poslovanje' where Oznaka='R02';
 update Aktvivnost set Trajanje=6 where Oznaka='A01';
 update Aktvivnost set Uvjet=20 where Oznaka='T01';
 delete from Aktvivnost where Oznaka='A02';
 
-select * from uèenik;
-select * from Uèenik DatumRoðenja like '2004%';
-delete from Uèenik where DatumRoðenja like'2004%';
+select * from ucenik;
+select * from Ucenik DatumRodenja like '2004%';
+delete from Ucenik where DatumRodenja like'2004%';
 

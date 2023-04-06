@@ -1,4 +1,4 @@
-create database StaraVideoteka;
+create database StaraVideoteka default charset utf8 ;
 
 use StaraVideoteka;
 
@@ -6,7 +6,7 @@ create table Klijent
 (IDKlijent int not null identity(1,1),
 ImeKlijenta nvarchar(30) not null,
 PrezimeKlijenta nvarchar(30) not null,
-DatumRoenja date,
+DatumRodenja date,
 Adresa nvarchar (30) not null,
 BrojTelefona varchar(15)
 constraint Klijent_PK primary key(IDKlijent));
@@ -19,10 +19,10 @@ select * from Klijent;
 alter table Klijent
 add constraint Klijent_PK primary key (IDKlijent);
 
-create table éanr
-(IDéanr int not null identity(1,1),
-Nazivéanra nvarchar(50) not null);
-alter table éanr add constraint éanr_PK primary key(IDéanr);
+create table zanr
+(IDzanr int not null identity(1,1),
+NazivZanra nvarchar(50) not null);
+alter table Zanr add constraint Zanr_PK primary key(IDzanr);
 
 create table Redatelj
 (IDRedatelj int not null identity(1,1),
@@ -35,8 +35,8 @@ select * from Redatelj;
 create table Film
 (IDFilm int not null identity (1,1),
 NazivFilma nvarchar(50) not null,
-äifraFilma varchar(10) not null,
-éanrID int not null,
+SifraFilma varchar(10) not null,
+ZanrID int not null,
 RedateljiID int not null,
 constraint Film_PK primary key (IDFilm));
 
@@ -48,7 +48,7 @@ create table Posudba
 KlijentID int not null,
 FilmID int not null,
 DatumPosudbe datetime2 not null,
-DatumVraÊanja datetime2
+DatumVracanja datetime2
 constraint Posudba_PK primary key (IDPosudba));
 
 alter table Posudba
@@ -60,30 +60,30 @@ add constraint FK_Posudba_Film foreign key(FilmID)
 references Film(IDFilm);
 
 alter table Film
-add constraint FK_Film_éanr foreign key(éanrID)
-references éanr(IDéanr);
+add constraint FK_Film_zanr foreign key(zanrID)
+references Zanr(IDzanr);
 
 alter table Film
 add constraint FK_Film_Redatelj foreign key(RedateljiID)
 references Redatelj(IDRedatelj);
 
-insert into éanr
+insert into Zanr
 values('Animirani'),('Dokumntarni'),
 ('Drama'),
 ('Akcija'),
 ('Triler'),
 ('Avantura'),
-('RomantiËni'),
+('Romantiƒçni'),
 ('Povjesni'),
 ('Ratni'),
 ('Obiteljski'),
 ('Vestern'),
-('KriminalistiËki'),
+('Kriminalistiƒçki'),
 ('Fantazija'),
 ('SF'),
 ('Komedija');
 
-select * from éanr;
+select * from Zanr;
 
 insert into Redatelj
 values ('Roland', 'Emmerich'),
@@ -96,12 +96,12 @@ values ('Roland', 'Emmerich'),
 select * from Redatelj;
 
 insert into Klijent values
-('Ana', 'PeriÊ','2000-01-12','Bjelovarska 1, Zagreb','01/123-456'),
-('Marko', 'AniÊ','2001-02-27','Daruvarska 3, Zagreb','01/123-564'),
-('Ivan', 'Hovrat','1999-03-07', 'KoprivniËka 10a, Vrbovec', '01/123-956'),
-('Bruno', 'TaniÊ', '1992-03-05', 'N. TavleiËa 45, Zagreb','01/123-856'),
-('Helena', 'TurniÊ', '1990-05-13','Supetrova 1a, Zagreb','01/123-756'),
-('Ana', 'IvaniÊ','2007-10-20', 'Slavonska 2, Zagreb', '01/123-656'),
+('Ana', 'Periƒá','2000-01-12','Bjelovarska 1, Zagreb','01/123-456'),
+('Marko', 'Aniƒá','2001-02-27','Daruvarska 3, Zagreb','01/123-564'),
+('Ivan', 'Hovrat','1999-03-07', 'Koprivniƒçka 10a, Vrbovec', '01/123-956'),
+('Bruno', 'Taniƒá', '1992-03-05', 'N. Tavleiƒça 45, Zagreb','01/123-856'),
+('Helena', 'Turniƒá', '1990-05-13','Supetrova 1a, Zagreb','01/123-756'),
+('Ana', 'Ivaniƒá','2007-10-20', 'Slavonska 2, Zagreb', '01/123-656'),
 ('Ivan', 'Petak', '2009-12-03', 'Vukovarska 8, Samobor', '01/123-556');
 
 select * from Klijent;
@@ -112,22 +112,22 @@ insert into Film values
 ('Harry Potter i odaja tajni', 'AV200B', 6, 6),
 ('EX machina', 'SF200A', 14, 2),
 ('Mamurluk', 'Kom100A', 15, 4),
-('Maöa', 'KRI100A', 12, 3),
+('Maƒça', 'KRI100A', 12, 3),
 ('Wall-E', 'ANIM100A', 1, 5);
 select * from Film;
 
---datum, broj tlefona, öifra filma
+--datum, broj tlefona, ≈°ifra filma
 ALTER TABLE Klijent
-ALTER COLUMN DatuRoenja date;
+ALTER COLUMN DatuRodenja date;
 
 alter table Klijent 
 alter column Brojtelefona varchar(15);
 
 alter table Film
-alter column äifraFilma varchar(10);
+alter column SifraFilma varchar(10);
 
 select * from Klijent;
-insert into Klijent(DatuRoenja, BrojTelefona) values
+insert into Klijent(DatuRodenja, BrojTelefona) values
 ('2000-01-12', '01/123-456'),
 ('2001-02-27', '01/123-564'),
 ('1999-03-07', '01/123-956'),
@@ -136,23 +136,23 @@ insert into Klijent(DatuRoenja, BrojTelefona) values
 ('2007-10-20', '01/123-656'),
 ('2009-12-03', '01/123-556');
 
-update Klijent set DatuRoenja='2009-12-03', BrojTelefona='01/123-556'where IDKlijent=10;
-update Klijent set DatuRoenja='2007-12-20', BrojTelefona='01/123-656' where IDKlijent=9;
-update Klijent set DatuRoenja='1990-05-13', BrojTelefona='01/123-756' where IDKlijent=8;
-update Klijent set DatuRoenja='1992-03-05', BrojTelefona='01/123-956' where IDKlijent=7;
-update Klijent set DatuRoenja='1999-03-07', BrojTelefona='01/123-656' where IDKlijent=6;
-update Klijent set DatuRoenja='2001-02-27', BrojTelefona='01/123-546' where IDKlijent=5;
-update Klijent set DatuRoenja='2000-01-12', BrojTelefona='01/123-456' where IDKlijent=4;
+update Klijent set DatuRodenja='2009-12-03', BrojTelefona='01/123-556'where IDKlijent=10;
+update Klijent set DatuRodenja='2007-12-20', BrojTelefona='01/123-656' where IDKlijent=9;
+update Klijent set DatuRodenja='1990-05-13', BrojTelefona='01/123-756' where IDKlijent=8;
+update Klijent set DatuRodenja='1992-03-05', BrojTelefona='01/123-956' where IDKlijent=7;
+update Klijent set DatuRodenja='1999-03-07', BrojTelefona='01/123-656' where IDKlijent=6;
+update Klijent set DatuRodenja='2001-02-27', BrojTelefona='01/123-546' where IDKlijent=5;
+update Klijent set DatuRodenja='2000-01-12', BrojTelefona='01/123-456' where IDKlijent=4;
  select * from Posudba;
- update Film set äifraFilma='AV100A' where NazivFilma='Harry Potter i kamen mudraca';
- update Film set äifraFilma='SF100A' where NazivFilma='Dan nezavisnosti: Nova prijetnja';
- update Film set äifraFilma='AV200B' where NazivFilma='Harry Potter i odaja tajni';
- update Film set äifraFilma='SF200A' where IDFilm=5;
- update Film set äifraFilma='Kom100A' where IDFilm=6;
-  update Film set äifraFilma='KRI100A' where IDFilm=7;
-   update Film set äifraFilma='ANM100A' where IDFilm=8;
+ update Film set SifraFilma='AV100A' where NazivFilma='Harry Potter i kamen mudraca';
+ update Film set SifraFilma='SF100A' where NazivFilma='Dan nezavisnosti: Nova prijetnja';
+ update Film set SifraFilma='AV200B' where NazivFilma='Harry Potter i odaja tajni';
+ update Film set SifraFilma='SF200A' where IDFilm=5;
+ update Film set SifraFilma='Kom100A' where IDFilm=6;
+  update Film set SifraFilma='KRI100A' where IDFilm=7;
+   update Film set SifraFilma='ANM100A' where IDFilm=8;
 
-update Klijent set IDKlijent= 1 where PrezimeKlijenta= 'PeriÊ';
+update Klijent set IDKlijent= 1 where PrezimeKlijenta= 'Periƒá';
 
  select * from klijent;
 
@@ -172,65 +172,65 @@ insert into Posudba values
 select * from Posudba;
 
 update Posudba set FilmID=2, DatumPosudbe='2021-10-13'where IDPosudba=7;
-update Posudba set DatumVraÊanja= null where IDPosudba = 7;
+update Posudba set DatumVracanja= null where IDPosudba = 7;
 select * from Film;
 select * from Klijent;
 select * from Posudba;
 select * from Redatelj;
-select * from éanr;
+select * from Zanr;
 
 select * from Klijent where Adresa like '%Zagreb';
 
-select * from Klijent where DatumRoenja < '2000-01-12';
+select * from Klijent where DatumRodenja < '2000-01-12';
 select * from film;
 
-select * from ûanr;
-select * from film where éanrID= '14';
+select * from Zanr;
+select * from film where ZanrID= '14';
 
 select * from Posudba;
-select * from posudba where DatumVraÊanja is null;
+select * from posudba where DatumVracanja is null;
 select * from film;
-select * from ûanr;
+select * from Zanr;
 
 
-select ImeKlijenta, PrezimeKlijenta, DatumPosudbe, DatumVraÊanja from Klijent
+select ImeKlijenta, PrezimeKlijenta, DatumPosudbe, DatumVracanja from Klijent
 inner join Posudba
 on Klijent.IDKlijent=Posudba.KlijentID;
 
 
---prikaûi popis filmova s ûanrom i redateljima
+--prika≈æi popis filmova s ≈æanrom i redateljima
 
 select*from Film;
-select * from éanr;
+select * from Zanr;
 select * from Redatelj;
 
-select NazivFilma, Nazivéanra, ImeREdatelja, PrezimeRedatelja from Film
-inner join éanr on Film.éanrID=éanr.IDéanr
+select NazivFilma, NazivZanra, ImeREdatelja, PrezimeRedatelja from Film
+inner join Zanr on Film.ZanrID=Zanr.IDZanr
 inner join Redatelj on Film.RedateljiID=Redatelj.IDRedatelj;
 
-select NazivFilma, Nazivéanra, ImeREdatelja, PrezimeRedatelja from Film
-left join éanr on Film.éanrID=éanr.IDéanr
+select NazivFilma, NazivZanra, ImeREdatelja, PrezimeRedatelja from Film
+left join Zanr on Film.ZanrID=Zanr.IDzanr
 left join Redatelj on Film.RedateljiID=Redatelj.IDRedatelj;
 
-select NazivFilma, Nazivéanra, ImeREdatelja, PrezimeRedatelja from Film
-right join éanr on Film.éanrID=éanr.IDéanr
+select NazivFilma, NazivZanra, ImeREdatelja, PrezimeRedatelja from Film
+right join Zanr on Film.ZanrID=Zanr.IDZanr
 right join Redatelj on Film.RedateljiID=Redatelj.IDRedatelj;
 
-select ImeKlijenta, PrezimeKlijenta, DatumVraÊanja, NazivFilma from Klijent
+select ImeKlijenta, PrezimeKlijenta, DatumVracanja, NazivFilma from Klijent
 inner join Posudba
 on Klijent.IDKlijent=Posudba.KlijentID
 inner join Film
 on Posudba.FilmID=FIlm.IDFilm;
 
-select ImeKlijenta, PrezimeKlijenta, DatumVraÊanja, NazivFilma from Klijent
+select ImeKlijenta, PrezimeKlijenta, DatumVracanja, NazivFilma from Klijent
 inner join Posudba
 on Klijent.IDKlijent=Posudba.KlijentID
 inner join Film
 on Posudba.FilmID=FIlm.IDFilm
-where DatumVraÊanja is null;
+where DatumVracanja is null;
 
 select * from film;
-select * from ûanr;
+select * from Zanr;
 
 
 select ImeRedatelja, PrezimeRedatelja, NazivFilma from Redatelj
@@ -238,29 +238,29 @@ inner join Film
 on Redatelj.IDRedatelj=Film.RedateljiID
 where ImeRedatelja='Chris' and PrezimeRedatelja='Columbs';
 
-select Nazivéanra from éanr
+select NazivZanra from Zanr
 full join Film
-on éanr.IDéanr=Film.éanrID
-where éanrID is null;
+on Zanr.IDzanr=Film.ZanrID
+where ZanrID is null;
 
 select * from klijent;
 
-update Klijent set PrezimeKlijenta='TopiÊ' where DatumRoenja='2000-01-12';
+update Klijent set PrezimeKlijenta='Topiƒá' where DatumRodenja='2000-01-12';
 
 delete From klijent where IDKlijent=7;
 
 select  * from posudba;
 
-update Posudba set DatumVraÊanja='2021-10-20' where DatumVraÊanja is null;
+update Posudba set DatumVracanja='2021-10-20' where DatumVracanja is null;
 
 select * from film;
-select * from éanr;
+select * from Zanr;
 
 create view vwAvantura AS 
-select NazivFilma, Nazivéanra
+select NazivFilma, NazivZanra
 from Film
-inner join éanr
-on Film.éanrID=éanr.IDéanr
-where Nazivéanra='Avantura';
+inner join Zanr
+on Film.ZanrID=Zanr.IDzanr
+where NazivZanra='Avantura';
 
 select * from vwAvantura;
