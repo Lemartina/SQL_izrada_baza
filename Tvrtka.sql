@@ -136,6 +136,9 @@ where c.naziv='programer'
 select * from zaposlenik
 select * from radnomjesto
 
+--============================================================
+--AGREATNE FUNKACIJE
+--=============================================================
 
 -- Prosjek plaæe po radnom mjestu
 SELECT b.naziv,
@@ -168,3 +171,5 @@ WHERE a.radnomjestoid = b.idradnomjesto
 and a.placaid=c.idplaca
 GROUP BY c.iznos, c.iznos * 12
 having c.iznos*12>60000
+
+
