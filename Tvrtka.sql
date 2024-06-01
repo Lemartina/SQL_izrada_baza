@@ -236,3 +236,15 @@ where c.naziv= 'programer'
 
 update placa
 set iznos=iznos/2 
+
+
+--==============================================
+--Delete 
+--==============================================
+
+select * from zaposlenik
+where idzap=10
+
+delete from zaposlenik
+where idzap=10
+
