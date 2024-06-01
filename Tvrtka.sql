@@ -273,3 +273,41 @@ placa b
 on a.placaid=b.idplaca
 where b.iznos >(
 select avg(iznos) from placa)
+
+--===============================
+--indexi
+--===============================
+
+CREATE INDEX zap
+ON zaposlenik (placaid, radnomjestoid)
+
+--===============================
+--transakcije
+--===============================
+
+select * from zaposlenik
+where ime='ANA'
+
+begin transaction
+update zaposlenik
+set ime='Ivana'
+where ime='Ana'
+
+save tran savepointA
+select * from zaposlenik 
+where idzap=3
+
+update zaposlenik
+set ime='Žana'
+where ime='Ivana'
+
+save tran savepointB
+select * from zaposlenik 
+where idzap=3
+
+rollback tran savepointB
+
+select * from zaposlenik 
+where idzap=3
+
+commit tran
