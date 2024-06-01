@@ -116,10 +116,6 @@ set radnomjestoid='2'
 where idzap in (1,2)
 
 
-
-SELECT * FROM zapslenik
-GROUP BY posao
-
 select
 a.ime, 
 a.prezime, 
@@ -172,4 +168,71 @@ and a.placaid=c.idplaca
 GROUP BY c.iznos, c.iznos * 12
 having c.iznos*12>60000
 
+--===========================================
+----INSERT – kopiranje tablica
+--===========================================
 
+create table kopijapl(
+id int not null primary key,
+bruto decimal(18,2))
+
+select * from kopijapl
+select * from placa
+
+
+use Tvrtka
+
+INSERT INTO kopijapl(id,bruto)
+SELECT idplaca, iznos
+FROM placa
+WHERE idplaca between 2 and 5
+
+--===========================================
+----update – podupiti 
+--===========================================
+--Promijeniti posao zaposlenika 1654 u tablici zapos2 tako da bude isti
+--kao kod zaposlenika br. 1345 iza tablice zapos
+
+select * from zaposlenik
+select * from placa
+
+-- poveæanje plaæe
+
+update  placa
+set iznos=iznos*2
+FROM zaposlenik a, radnomjesto b, placa c
+WHERE a.radnomjestoid = b.idradnomjesto
+and a.placaid=c.idplaca
+
+select distinct (b.naziv), sum(c.iznos) as [iznos troška]
+FROM zaposlenik a, radnomjesto b, placa c
+WHERE a.radnomjestoid = b.idradnomjesto
+and a.placaid=c.idplaca
+group by b.naziv
+
+select a.ime, a.prezime, b.naziv, c.iznos
+FROM zaposlenik a
+inner join radnomjesto b
+on a.radnomjestoid = b.idradnomjesto
+inner join placa c
+on a.placaid=c.idplaca
+where b.naziv= 'programer'
+
+
+
+-- poveæati plaæu 2x za progremere
+
+update placa 
+set iznos = iznos *2
+FROM placa a
+inner join zaposlenik b
+on a.idplaca = b.placaid
+inner join radnomjesto c
+on b.radnomjestoid=c.idradnomjesto
+where c.naziv= 'programer'
+
+
+--poveæati plaæu svima *2
+
+update placa
+set iznos=iznos/2 
