@@ -248,3 +248,28 @@ where idzap=10
 delete from zaposlenik
 where idzap=10
 
+--===================================
+--Subsquery
+--===================================
+
+
+--ispisati zaposlenike koji imaju veæi dohodak od Ane 
+
+select a.ime, a.prezime, b.iznos from
+zaposlenik a
+inner join 
+placa b 
+on a.placaid=b.idplaca
+where idplaca > (
+select placaid from zaposlenik where ime='ana')
+
+
+
+--- zaposleni koji imaju plaæu veæu prosjeka
+
+select a.ime, a.prezime, b.iznos from zaposlenik a
+inner join
+placa b
+on a.placaid=b.idplaca
+where b.iznos >(
+select avg(iznos) from placa)
