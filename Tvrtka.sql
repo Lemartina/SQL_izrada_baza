@@ -321,3 +321,56 @@ FROM     dbo.zaposlenik INNER JOIN
                   dbo.placa ON dbo.zaposlenik.placaid = dbo.placa.idplaca
 
  select * from pregleddj
+
+ --============================================
+ --Privremene tablice
+ --============================================
+
+ SELECT dbo.radnomjesto.naziv, dbo.placa.iznos
+ into #placaProgremera
+FROM     dbo.placa INNER JOIN
+                  dbo.zaposlenik ON dbo.placa.idplaca = dbo.zaposlenik.placaid INNER JOIN
+                  dbo.radnomjesto ON dbo.zaposlenik.radnomjestoid = dbo.radnomjesto.idradnomjesto
+				  where dbo.radnomjesto.naziv= 'programer'
+
+SELECT * from #placaProgremera
+
+
+--Procedura
+
+create procedure placa_novo
+@noviiznos decimal (18,2)
+as
+select * from placa
+where iznos= @noviiznos
+
+exec placa_novo
+
+
+--Triger
+
+
+create trigger podsjetnik
+on zaposlenik
+for insert
+as 
+print 'Dodan je novi zaposlenik'
+
+CREATE TRIGGER NoviTriger
+   ON  Placa
+   for UPDATE
+AS 
+print
+	'Ažurirana je plaæa postojeæeg djelatnika'
+
+
+
+select * from zaposlenik
+insert into zaposlenik
+values (11,'Maja', 'Markoviæ',1,2)
+
+select * from placa
+
+update placa
+set iznos='5000'
+where idplaca='4'
