@@ -311,3 +311,13 @@ select * from zaposlenik
 where idzap=3
 
 commit tran
+
+
+
+create view  pregleddj as
+SELECT dbo.zaposlenik.ime, dbo.zaposlenik.prezime, dbo.placa.iznos, dbo.radnomjesto.naziv
+FROM     dbo.zaposlenik INNER JOIN
+                  dbo.radnomjesto ON dbo.zaposlenik.radnomjestoid = dbo.radnomjesto.idradnomjesto INNER JOIN
+                  dbo.placa ON dbo.zaposlenik.placaid = dbo.placa.idplaca
+
+ select * from pregleddj
