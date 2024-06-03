@@ -338,13 +338,14 @@ SELECT * from #placaProgremera
 
 --Procedura
 
-create procedure placa_novo
+create or alter procedure 
+placa_novo
 @noviiznos decimal (18,2)
 as
 select * from placa
 where iznos= @noviiznos
 
-exec placa_novo
+exec placa_novo @noviiznos='5000'
 
 
 --Triger
